@@ -1,6 +1,4 @@
-let currentPlayer = 'X';
-let boardSize = 3; 
-let winningCondition = 3; 
+let boardSize = 3;
 let board = [];
 
 function initializeBoard() {
@@ -14,10 +12,14 @@ function initializeBoard() {
 
         for (let j = 0; j < boardSize; j++) {
             const cell = document.createElement('div');
+            cell.className = 'cell';
             cell.dataset.row = i;
             cell.dataset.col = j;
-            cell.addEventListener('click', () => handleCellClick(i, j));
             boardElement.appendChild(cell);
         }
     }
 }
+
+
+
+initializeBoard();
