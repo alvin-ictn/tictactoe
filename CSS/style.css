@@ -18,9 +18,10 @@ body {
     height: calc(60vh / var(--board-size));
     text-align: center;
     line-height: calc(60vh / var(--board-size));
-    font-size: 18px;
+    /* font-size: 18px; */
     border: 1px solid #ccc;
     cursor: pointer;
+    font-size: calc(50vh / var(--board-size));
 }
 
 main.container {
@@ -85,11 +86,23 @@ main.container {
 
 #scoreboard > .timer {
     width: 100%;
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+#scoreboard > .timer > .player-turn {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #timeBarContainer {
     width: 100%;
-    margin-top: 10px;
     background-color: transparent;
     border: 1px solid #333;
     border-radius: 5px;

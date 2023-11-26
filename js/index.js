@@ -1,7 +1,7 @@
-let boardSize = 50;
+let boardSize = 3;
 let board = [];
 let currentPlayer = 'X';
-let winningCondition = 5;
+let winningCondition = 3;
 let moves = 0;
 let playerXScore = 0;
 let playerOScore = 0;
@@ -13,6 +13,7 @@ let elapsedInterval;
 let moveTimeLimit = 10;
 
 const timeBar = document.getElementById('timeBar');
+const player = document.getElementById('player');
 
 const updateScoreboard = () => {
     const scoreboard = document.getElementById('scoreboard');
@@ -51,6 +52,7 @@ const startTimer = () => {
             currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
             updateScoreboard()
             resetTimer();
+            player.textContent = currentPlayer;
         }
     }, 1000);
 };
@@ -72,6 +74,7 @@ const initializeBoard = () => {
     board = [];
     moves = 0;
     clearInterval(timerInterval);
+    player.textContent = currentPlayer;
     timer = 0;
     updateScoreboard();
 
@@ -147,6 +150,7 @@ const handleCellClick = (row, col) => {
                 currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
                 updateScoreboard();
                 resetTimer();
+                player.textContent = currentPlayer;
             }
         }
 }
