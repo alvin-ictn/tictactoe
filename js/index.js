@@ -121,7 +121,7 @@ const renderBoard = () => {
         cells[i].textContent = board[row][col] || '';
         cells[i].classList.remove('winner');
         if (checkWinner(parseInt(row), parseInt(col))) {
-            cells[i].classList.add('winner');
+			if(cells[i].innerHTML === currentPlayer) cells[i].classList.add('winner');
         }
     }
 }
