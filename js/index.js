@@ -1,4 +1,4 @@
-let boardSize = 3;
+let boardSize = 5;
 let board = [];
 let currentPlayer = 'X';
 let winningCondition = 3;
