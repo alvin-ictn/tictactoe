@@ -69,7 +69,6 @@ const renderBoard = () => {
 
         cells[i].textContent = board[row][col] || '';
         cells[i].classList.remove('winner');
-        console.log(cells,"\nrow", board[row][col], "\n",row,parseInt(row), "\ncol",col,parseInt(col),"\ncheck",checkWinner(parseInt(row), parseInt(col)))
         if (checkWinner(parseInt(row), parseInt(col))) {
             cells[i].classList.add('winner');
         }
