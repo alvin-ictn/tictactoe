@@ -7,6 +7,7 @@ let playerXScore = 0;
 let playerOScore = 0;
 let timerInterval;
 let secondsElapsed = 0;
+let moveTimeLimit = 10;
 
 const updateScoreboard = () => {
     document.getElementById('scoreboard').textContent = `Player X: ${playerXScore} | Player O: ${playerOScore} | Timer: ${secondsElapsed}s | Moves: ${moves}`;
@@ -16,14 +17,32 @@ const updateScore = () => {
     currentPlayer === 'X' ? playerXScore++ : playerOScore++;
 };
 
+const resetTimer = () => {
+    clearInterval(timerInterval);
+    secondsElapsed = 0;
+    startTimer();
+};
+
 const startTimer = () => {
     timerInterval = setInterval(() => {
         secondsElapsed++;
         updateScoreboard();
+
+        if (secondsElapsed === moveTimeLimit) {
+            alert(`Player ${currentPlayer} took too long! Switching to the other player.`);
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            updateScoreboard();
+            resetTimer();
+        }
     }, 1000);
 };
 
+
 const initializeBoard = () => {
+    if(winningCondition > boardSize) {
+        alert('Please lower your winning condition to lower than board size')
+        return;
+    }
     const boardElement = document.getElementById('board');
     document.documentElement.style.setProperty('--board-size', boardSize)
     boardElement.innerHTML = '';
@@ -90,6 +109,7 @@ const handleCellClick = (row, col) => {
             } else {
                 currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
                 updateScoreboard();
+                resetTimer();
             }
         }
 }
