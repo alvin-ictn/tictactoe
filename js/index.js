@@ -10,7 +10,7 @@ let timerInterval;
 let timer = 0;
 let secondsElapsed = 0;
 let elapsedInterval;
-let moveTimeLimit = 10;
+let moveTimeLimit = 3;
 
 const timeBar = document.getElementById('timeBar');
 const player = document.getElementById('player');
@@ -20,7 +20,7 @@ const updateScoreboard = () => {
     document.querySelector('#score-x > .score-point').textContent = `${playerXScore}`
     document.querySelector('#score-tie > .score-point ').textContent = `${ties}`
     document.querySelector('#score-o > .score-point').textContent = `${playerOScore}`
-    document.querySelector('#time > .time-move-point').textContent = `${secondsElapsed}s`;
+    // document.querySelector('#time > .time-move-point').textContent = `${secondsElapsed}s`;
     document.querySelector('#move > .time-move-point').textContent = `${moves}`;
     // scoreboard. = `Player X: ${playerXScore} | Ties: ${ties} | Player O: ${playerOScore} | Timer: ${timer}s | Moves: ${moves}`;
 };
@@ -47,8 +47,8 @@ const startTimer = () => {
         timeBar.style.width = `${percentage}%`;
         updateScoreboard()
 
-        if (timer === moveTimeLimit) {
-            alert(`Player ${currentPlayer} took too long! Switching to the other player.`);
+        if (timer > moveTimeLimit) {
+            // alert(`Player ${currentPlayer} took too long! Switching to the other player.`);
             currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
             updateScoreboard()
             resetTimer();
@@ -139,11 +139,11 @@ const handleCellClick = (row, col) => {
             moves++;
             renderBoard();
             if (checkWinner(row, col)) {
-                alert(`Player ${currentPlayer} wins!`);
+                // alert(`Player ${currentPlayer} wins!`);
                 updateScore();
                 initializeBoard();
             } else if (board.flat().every(cell => cell !== null)) {
-                alert('It\'s a draw!');
+                // alert('It\'s a draw!');
                 ties++;
                 initializeBoard();
             } else {
