@@ -25,6 +25,10 @@ body {
     font-size: calc(50vh / var(--board-size));
 }
 
+.cell.winner {
+    background-color: #8cffa9;
+}
+
 main.container {
     display: flex;
     flex-direction: column;
