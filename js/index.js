@@ -5,12 +5,13 @@ let winningCondition = 3;
 let moves = 0;
 let playerXScore = 0;
 let playerOScore = 0;
+let ties = 0;
 let timerInterval;
 let secondsElapsed = 0;
 let moveTimeLimit = 10;
 
 const updateScoreboard = () => {
-    document.getElementById('scoreboard').textContent = `Player X: ${playerXScore} | Player O: ${playerOScore} | Timer: ${secondsElapsed}s | Moves: ${moves}`;
+    document.getElementById('scoreboard').textContent = `Player X: ${playerXScore} | Ties: ${ties} | Player O: ${playerOScore} | Timer: ${secondsElapsed}s | Moves: ${moves}`;
 };
 
 const updateScore = () => {
@@ -105,6 +106,7 @@ const handleCellClick = (row, col) => {
                 initializeBoard();
             } else if (board.flat().every(cell => cell !== null)) {
                 alert('It\'s a draw!');
+                ties++;
                 initializeBoard();
             } else {
                 currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
