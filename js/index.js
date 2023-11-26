@@ -19,7 +19,6 @@ const winnerMessage = document.getElementById('winner-message');
 const playAgainButton = document.getElementById('play-again-button');
 
 const updateScoreboard = () => {
-    const scoreboard = document.getElementById('scoreboard');
     document.querySelector('#score-x > .score-point').textContent = `${playerXScore}`
     document.querySelector('#score-tie > .score-point ').textContent = `${ties}`
     document.querySelector('#score-o > .score-point').textContent = `${playerOScore}`
@@ -49,7 +48,6 @@ const startTimer = () => {
         updateScoreboard()
 
         if (timer > moveTimeLimit) {
-            // alert(`Player ${currentPlayer} took too long! Switching to the other player.`);
             currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
             updateScoreboard()
             resetTimer();
