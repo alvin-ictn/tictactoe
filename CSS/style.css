@@ -22,3 +22,10 @@ body {
     border: 1px solid #ccc;
     cursor: pointer;
 }
+
+main.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}

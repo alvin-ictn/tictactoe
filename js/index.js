@@ -2,12 +2,36 @@ let boardSize = 3;
 let board = [];
 let currentPlayer = 'X';
 let winningCondition = 3;
+let moves = 0;
+let playerXScore = 0;
+let playerOScore = 0;
+let timerInterval;
+let secondsElapsed = 0;
 
-function initializeBoard() {
+const updateScoreboard = () => {
+    document.getElementById('scoreboard').textContent = `Player X: ${playerXScore} | Player O: ${playerOScore} | Timer: ${secondsElapsed}s | Moves: ${moves}`;
+};
+
+const updateScore = () => {
+    currentPlayer === 'X' ? playerXScore++ : playerOScore++;
+};
+
+const startTimer = () => {
+    timerInterval = setInterval(() => {
+        secondsElapsed++;
+        updateScoreboard();
+    }, 1000);
+};
+
+const initializeBoard = () => {
     const boardElement = document.getElementById('board');
     document.documentElement.style.setProperty('--board-size', boardSize)
     boardElement.innerHTML = '';
     board = [];
+    moves = 0;
+    clearInterval(timerInterval);
+    secondsElapsed = 0;
+    updateScoreboard();
 
     for (let i = 0; i < boardSize; i++) {
         board.push(Array(boardSize).fill(null));
@@ -21,9 +45,11 @@ function initializeBoard() {
             boardElement.appendChild(cell);
         }
     }
+
+    startTimer();
 }
 
-function checkWinner(row, col) {
+const checkWinner = (row, col) => {
     if (board[row].join('').includes(currentPlayer.repeat(winningCondition))) return true;
 
     if (board.map(r => r[col]).join('').includes(currentPlayer.repeat(winningCondition))) return true;
@@ -34,7 +60,7 @@ function checkWinner(row, col) {
     return false;
 }
 
-function renderBoard() {
+const renderBoard = () => {
     const cells = document.getElementsByClassName('cell');
 
     for (let i = 0; i < cells.length; i++) {
@@ -50,18 +76,21 @@ function renderBoard() {
     }
 }
 
-function handleCellClick(row, col) {
+const handleCellClick = (row, col) => {
     if (!board[row][col]) {
             board[row][col] = currentPlayer;
+            moves++;
             renderBoard();
             if (checkWinner(row, col)) {
                 alert(`Player ${currentPlayer} wins!`);
+                updateScore();
                 initializeBoard();
             } else if (board.flat().every(cell => cell !== null)) {
                 alert('It\'s a draw!');
                 initializeBoard();
             } else {
                 currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                updateScoreboard();
             }
         }
 }
