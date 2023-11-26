@@ -82,12 +82,25 @@ const initializeBoard = () => {
 }
 
 const checkWinner = (row, col) => {
-    if (board[row].join('').includes(currentPlayer.repeat(winningCondition))) return true;
+    const consecutiveCount = (arr) => {
+        let count = 0;
+        let maxCount = 0;
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] === currentPlayer) {
+                count++;
+                maxCount = Math.max(maxCount, count);
+            } else {
+                count = 0;
+            }
+        }
+        return maxCount;
+    };
+    if (consecutiveCount(board[row]) >= winningCondition) return true;
 
-    if (board.map(r => r[col]).join('').includes(currentPlayer.repeat(winningCondition))) return true;
+    if (consecutiveCount(board.map(r => r[col])) >= winningCondition) return true;
 
-    if (row === col && board.map((r, i) => r[i]).join('').includes(currentPlayer.repeat(winningCondition))) return true;
-    if (row + col === boardSize - 1 && board.map((r, i) => r[boardSize - 1 - i]).join('').includes(currentPlayer.repeat(winningCondition))) return true;
+    if (row === col && consecutiveCount(board.map((r, i) => r[i])) >= winningCondition) return true;
+    if (row + col === boardSize - 1 && consecutiveCount(board.map((r, i) => r[boardSize - 1 - i])) >= winningCondition) return true;
 
     return false;
 }
