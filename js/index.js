@@ -1,7 +1,7 @@
-let boardSize = 10;
+let boardSize = 50;
 let board = [];
 let currentPlayer = 'X';
-let winningCondition = 5;
+let winningCondition = 3;
 let moves = 0;
 let playerXScore = 0;
 let playerOScore = 0;
@@ -10,8 +10,13 @@ let timerInterval;
 let secondsElapsed = 0;
 let moveTimeLimit = 10;
 
+const timeBar = document.getElementById('timeBar');
+
 const updateScoreboard = () => {
-    document.getElementById('scoreboard').textContent = `Player X: ${playerXScore} | Ties: ${ties} | Player O: ${playerOScore} | Timer: ${secondsElapsed}s | Moves: ${moves}`;
+    const scoreboard = document.getElementById('scoreboard');
+    document.querySelector('#time > .time-move-point').textContent = `${secondsElapsed}s`;
+    document.querySelector('#move > .time-move-point').textContent = `${moves}`;
+    // scoreboard. = `Player X: ${playerXScore} | Ties: ${ties} | Player O: ${playerOScore} | Timer: ${secondsElapsed}s | Moves: ${moves}`;
 };
 
 const updateScore = () => {
@@ -21,18 +26,25 @@ const updateScore = () => {
 const resetTimer = () => {
     clearInterval(timerInterval);
     secondsElapsed = 0;
-    startTimer();
+    timeBar.style.transition = 'width 0s linear';
+    timeBar.style.width = '0%';
+    setTimeout(() => {
+        timeBar.style.transition = 'width 0.5s linear';
+        startTimer();
+    }, 0);
 };
 
 const startTimer = () => {
     timerInterval = setInterval(() => {
         secondsElapsed++;
-        updateScoreboard();
+        const percentage = (secondsElapsed / moveTimeLimit) * 100;
+        timeBar.style.width = `${percentage}%`;
+        updateScoreboard()
 
         if (secondsElapsed === moveTimeLimit) {
             alert(`Player ${currentPlayer} took too long! Switching to the other player.`);
             currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-            updateScoreboard();
+            updateScoreboard()
             resetTimer();
         }
     }, 1000);

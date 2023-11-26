@@ -8,8 +8,40 @@
 </head>
 <body>
     <main class="container">
-        <div id="scoreboard">Player X: 0 | Ties: 0 | Player O: 0 | Timer: 0s | Moves: 0</div>
-        <div id="board"></div>
+        <section id="scoreboard">
+            <div class="information">
+                <div class="score">
+                    <div class="score-container" id="score-x">
+                        <span class="score-title">Player X</span>
+                        <p class="score-point">0</p>
+                    </div>
+                    <div class="score-container" id="score-tie">
+                        <span class="score-title">Tie</span>
+                        <p class="score-point">0</p>
+                    </div>
+                    <div class="score-container" id="score-o">
+                        <span class="score-title">Player O</span>
+                        <p class="score-point">0</p>
+                    </div>
+                </div>
+                <div class="time-move">
+                    <div class="time-move-container" id="time">
+                        <span class="time-move-title">Timer</span>
+                        <p class="time-move-point">0</p>
+                    </div>
+                    <div class="time-move-container" id="move">
+                        <span class="time-move-title">Moves</span>
+                        <p class="time-move-point">0</p>
+                    </div>
+                </div>
+            </div>
+            <div class="timer">
+                <div id="timeBarContainer">
+                    <div id="timeBar"></div>
+                </div>
+            </div>
+        </section>
+        <section id="board"></section>
     </main>
 </body>
 <script src="js/index.js"></script>
