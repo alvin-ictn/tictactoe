@@ -1,22 +1,27 @@
 let boardSize = 50;
 let board = [];
 let currentPlayer = 'X';
-let winningCondition = 3;
+let winningCondition = 5;
 let moves = 0;
 let playerXScore = 0;
 let playerOScore = 0;
 let ties = 0;
 let timerInterval;
+let timer = 0;
 let secondsElapsed = 0;
+let elapsedInterval;
 let moveTimeLimit = 10;
 
 const timeBar = document.getElementById('timeBar');
 
 const updateScoreboard = () => {
     const scoreboard = document.getElementById('scoreboard');
+    document.querySelector('#score-x > .score-point').textContent = `${playerXScore}`
+    document.querySelector('#score-tie > .score-point ').textContent = `${ties}`
+    document.querySelector('#score-o > .score-point').textContent = `${playerOScore}`
     document.querySelector('#time > .time-move-point').textContent = `${secondsElapsed}s`;
     document.querySelector('#move > .time-move-point').textContent = `${moves}`;
-    // scoreboard. = `Player X: ${playerXScore} | Ties: ${ties} | Player O: ${playerOScore} | Timer: ${secondsElapsed}s | Moves: ${moves}`;
+    // scoreboard. = `Player X: ${playerXScore} | Ties: ${ties} | Player O: ${playerOScore} | Timer: ${timer}s | Moves: ${moves}`;
 };
 
 const updateScore = () => {
@@ -25,7 +30,7 @@ const updateScore = () => {
 
 const resetTimer = () => {
     clearInterval(timerInterval);
-    secondsElapsed = 0;
+    timer = 0;
     timeBar.style.transition = 'width 0s linear';
     timeBar.style.width = '0%';
     setTimeout(() => {
@@ -36,12 +41,12 @@ const resetTimer = () => {
 
 const startTimer = () => {
     timerInterval = setInterval(() => {
-        secondsElapsed++;
-        const percentage = (secondsElapsed / moveTimeLimit) * 100;
+        timer++;
+        const percentage = (timer / moveTimeLimit) * 100;
         timeBar.style.width = `${percentage}%`;
         updateScoreboard()
 
-        if (secondsElapsed === moveTimeLimit) {
+        if (timer === moveTimeLimit) {
             alert(`Player ${currentPlayer} took too long! Switching to the other player.`);
             currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
             updateScoreboard()
@@ -50,6 +55,11 @@ const startTimer = () => {
     }, 1000);
 };
 
+const startElapsed = () => {
+    setInterval(() => {
+        secondsElapsed++;
+    }, 1000);
+};
 
 const initializeBoard = () => {
     if(winningCondition > boardSize) {
@@ -62,7 +72,7 @@ const initializeBoard = () => {
     board = [];
     moves = 0;
     clearInterval(timerInterval);
-    secondsElapsed = 0;
+    timer = 0;
     updateScoreboard();
 
     for (let i = 0; i < boardSize; i++) {
@@ -77,7 +87,7 @@ const initializeBoard = () => {
             boardElement.appendChild(cell);
         }
     }
-
+    startElapsed()
     startTimer();
 }
 
