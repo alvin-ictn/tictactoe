@@ -27,6 +27,24 @@ body {
 
 .cell.winner {
     background-color: #8cffa9;
+    animation: 0.5s cubic-bezier(0, 0, 0.2, 1) 0s infinite normal none running anim-vibrate;
+}
+
+@keyframes anim-vibrate {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(252, 3, 3, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0.6rem rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
 }
 
 main.container {
