@@ -9,15 +9,15 @@ body {
 
 #board {
     display: grid;
-    grid-template-columns: repeat(var(--board-size, 3), 40px);
-    grid-gap: 5px;
+    grid-template-columns: repeat(var(--board-size, 3), calc(70vh / var(--board-size)));
+    grid-gap: calc(70vh / var(--board-size) / 7);
 }
 
 .cell {
-    width: 40px;
-    height: 40px;
+    width: calc(70vh / var(--board-size));
+    height: calc(70vh / var(--board-size));
     text-align: center;
-    line-height: 40px;
+    line-height: calc(70vh / var(--board-size));
     font-size: 18px;
     border: 1px solid #ccc;
     cursor: pointer;
