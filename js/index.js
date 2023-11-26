@@ -1,4 +1,4 @@
-let boardSize = 3;
+let boardSize = 5;
 let board = [];
 let currentPlayer = 'X';
 let winningCondition = 3;
@@ -8,21 +8,22 @@ let playerOScore = 0;
 let ties = 0;
 let timerInterval;
 let timer = 0;
-let secondsElapsed = 0;
-let elapsedInterval;
 let moveTimeLimit = 3;
+let gameOver = false;
 
 const timeBar = document.getElementById('timeBar');
 const player = document.getElementById('player');
+
+const winnerModal = document.getElementById('winner-modal');
+const winnerMessage = document.getElementById('winner-message');
+const playAgainButton = document.getElementById('play-again-button');
 
 const updateScoreboard = () => {
     const scoreboard = document.getElementById('scoreboard');
     document.querySelector('#score-x > .score-point').textContent = `${playerXScore}`
     document.querySelector('#score-tie > .score-point ').textContent = `${ties}`
     document.querySelector('#score-o > .score-point').textContent = `${playerOScore}`
-    // document.querySelector('#time > .time-move-point').textContent = `${secondsElapsed}s`;
     document.querySelector('#move > .time-move-point').textContent = `${moves}`;
-    // scoreboard. = `Player X: ${playerXScore} | Ties: ${ties} | Player O: ${playerOScore} | Timer: ${timer}s | Moves: ${moves}`;
 };
 
 const updateScore = () => {
@@ -57,13 +58,8 @@ const startTimer = () => {
     }, 1000);
 };
 
-const startElapsed = () => {
-    setInterval(() => {
-        secondsElapsed++;
-    }, 1000);
-};
-
 const initializeBoard = () => {
+    gameOver = false;
     if(winningCondition > boardSize) {
         alert('Please lower your winning condition to lower than board size')
         return;
@@ -90,7 +86,6 @@ const initializeBoard = () => {
             boardElement.appendChild(cell);
         }
     }
-    startElapsed()
     startTimer();
 }
 
@@ -134,25 +129,38 @@ const renderBoard = () => {
 }
 
 const handleCellClick = (row, col) => {
-    if (!board[row][col]) {
-            board[row][col] = currentPlayer;
-            moves++;
-            renderBoard();
-            if (checkWinner(row, col)) {
-                // alert(`Player ${currentPlayer} wins!`);
-                updateScore();
-                initializeBoard();
-            } else if (board.flat().every(cell => cell !== null)) {
-                // alert('It\'s a draw!');
-                ties++;
-                initializeBoard();
-            } else {
-                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-                updateScoreboard();
-                resetTimer();
-                player.textContent = currentPlayer;
-            }
+    if (!board[row][col] && !gameOver) {
+        board[row][col] = currentPlayer;
+        moves++;
+        renderBoard();
+        if (checkWinner(row, col)) {
+            updateScore();
+            clearInterval(timerInterval);
+            declareWinner(currentPlayer);
+			gameOver = true;
+        } else if (board.flat().every(cell => cell !== null)) {
+            ties++;
+            clearInterval(timerInterval);
+            declareWinner('Tie');
+			gameOver = true;
+        } else {
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+            updateScoreboard();
+            resetTimer();
+            player.textContent = currentPlayer;
         }
+    }
 }
+
+const declareWinner = (winner) => {
+    winnerModal.style.display = 'block';
+    winnerMessage.textContent = winner === "Tie" ? `It's a Tie` : `Player ${winner} wins!`;
+  
+    playAgainButton.addEventListener('click', () => {
+		winnerModal.style.display = 'none';
+		initializeBoard();
+	});	
+}
+
 
 initializeBoard();
