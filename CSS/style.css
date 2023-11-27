@@ -47,6 +47,25 @@ body {
   }
 }
 
+.game-setup {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #333;
+    position: absolute;
+    z-index: 2;
+    top:0;
+    color: azure;
+}
+
+#setup {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 main.container {
     display: flex;
     flex-direction: column;
@@ -168,7 +187,7 @@ main.container {
     font-weight: bold;
 }
 
-#play-again-button {
+#play-again-button, #exit-game-button {
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;

@@ -1,15 +1,53 @@
 let boardSize = 5;
-let board = [];
-let currentPlayer = 'X';
 let winningCondition = 3;
+let currentPlayer = 'X';
+let moveTimeLimit = 3;
+let board = [];
 let moves = 0;
 let playerXScore = 0;
 let playerOScore = 0;
 let ties = 0;
 let timerInterval;
 let timer = 0;
-let moveTimeLimit = 3;
 let gameOver = false;
+
+const boardSizeInput = document.querySelector('input[name=boardsize]')
+const winningConditionInput = document.querySelector('input[name=winningcondition]')
+const moveTimeLimitInput = document.querySelector('input[name=time]')
+const selectSide = document.querySelector('#side')
+const submitter = document.querySelector("#start");
+const gameSetup = document.querySelector('.game-setup')
+
+submitter.addEventListener('click', (a) => {
+	if(boardSizeInput.value < 3 || boardSizeInput.value > 50) {
+		alert('please input board size between 3 and 50')
+		if(boardSizeInput.value < 3) {
+			boardSizeInput.value = 3
+		} else {
+			boardSizeInput.value = 50
+		}
+		return;
+	}
+
+	if(winningConditionInput.value < 3 || winningConditionInput.value > boardSizeInput.value) {
+		alert('please input board size between 3 and not over than board size');
+		if(winningConditionInput.value < 3) {
+			winningConditionInput.value = 3
+		} else {
+			winningConditionInput.value = boardSizeInput.value
+		}
+		return;
+	}
+
+	boardSize = parseInt(boardSizeInput.value);
+	winningCondition = parseInt(winningConditionInput.value);
+	moveTimeLimit = parseInt(moveTimeLimitInput.value);
+	currentPlayer = selectSide.options[selectSide.selectedIndex].text;
+	gameSetup.style.display = 'none'
+	
+	initializeBoard();
+
+})
 
 const timeBar = document.getElementById('timeBar');
 const player = document.getElementById('player');
@@ -17,6 +55,7 @@ const player = document.getElementById('player');
 const winnerModal = document.getElementById('winner-modal');
 const winnerMessage = document.getElementById('winner-message');
 const playAgainButton = document.getElementById('play-again-button');
+const exitGameButton = document.getElementById('exit-game-button');
 
 const updateScoreboard = () => {
     document.querySelector('#score-x > .score-point').textContent = `${playerXScore}`
@@ -157,8 +196,17 @@ const declareWinner = (winner) => {
     playAgainButton.addEventListener('click', () => {
 		winnerModal.style.display = 'none';
 		initializeBoard();
+	});
+
+	exitGameButton.addEventListener('click', () => {
+		winnerModal.style.display = 'none';
+		gameSetup.style.display = 'flex'
+		board = [];
+		moves = 0;
+		playerXScore = 0;
+		playerOScore = 0;
+		ties = 0;
+		timer = 0;
+		gameOver = true;
 	});	
 }
-
-
-initializeBoard();

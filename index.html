@@ -8,6 +8,30 @@
 </head>
 <body>
     <main class="container">
+        <section class="game-setup">
+            <div id="setup">
+                <div class="field">
+                    <label class="menu-label">Board Size: </label>
+                    <input type="number" class="menu" name="boardsize" min="3" max="50" value="3"/>
+                </div>
+                <div class="field">
+                    <label class="menu-label">Winning Condition: </label>
+                    <input type="number" class="menu" name="winningcondition" min="3" max="50" value="3"/>
+                </div>
+                <div class="field">
+                    <label class="menu-label">Time each Turn: </label>
+                    <input type="number" class="menu" name="time" min="1" max="300" value="5"/>
+                </div>
+                <div class="field">
+                    <label class="menu-label">Choose your Side: </label>
+                    <select name="side" id="side">
+                        <option value="X">X</option>
+                        <option value="O">O</option>
+                    </select>
+                </div>
+                <button id="start">START</button>
+            </div>
+        </section>
         <section id="scoreboard">
             <div class="information">
                 <div class="score">
@@ -46,6 +70,7 @@
         <div class="modal-content">
             <h2 id="winner-message"></h2>
             <button id="play-again-button">Play Again</button>
+            <button id="exit-game-button">Exit Game</button>
         </div>
     </div>
 </body>
